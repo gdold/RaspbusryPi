@@ -44,7 +44,7 @@ class BusInfo():
     @staticmethod
     def search_by_location_id(_id):
         dat = BeautifulSoup(requests.get(LOCATION_URL+_id).text, 'html.parser')
-        matches = soup.find_all('tr')
+        matches = dat.find_all('tr')
         results = {}
         for match in matches:
             _id = match.get('id').split('-')[-1]
