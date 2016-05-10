@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import FreeFL.freefl as ffl
 import BusStop as bs
 
