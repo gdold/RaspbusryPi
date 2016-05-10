@@ -17,3 +17,8 @@ class Displayotron():
         lcd.set_cursor_position(0,line)
         lcd.write(text)
 
+    def set_rgb(self,red,green,blue):
+        red = int(red)
+        green = int(green)
+        blue = int(blue)
+        backlight.rgb(red,green,blue)
