@@ -21,6 +21,11 @@ update = True
 id = "54119"
 bus = "W7"
 delay = 30
+
+backlight_r = 33
+backlight_g = 33
+backlight_b = 33
+lcd_contrast = 43
     
 Stop = bs.BusStop(id)
 Disp = dsp.Displayotron()
@@ -44,7 +49,8 @@ def update_display():
 
 Disp.tidyup()
 
-Disp.set_rgb(33,33,33)
+Disp.set_rgb(backlight_r,backlight_g,backlight_b)
+lcd.set_contrast(lcd_contrast)
 
 update_bus_info()
 display_bus_times()
