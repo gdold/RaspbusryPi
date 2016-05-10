@@ -12,7 +12,7 @@ import sys
 import BusUpdater as upd
 
 def strip_spaces(string):
-    return string.replace(' ','')
+    return string.replace(', ',',')
 
 update = True
     
@@ -29,7 +29,10 @@ def update_bus_info():
 def display_bus_times():
     lcd.clear()
     Disp.write_line(0,bus + " from " + id)
-    Disp.write_line(1,strip_spaces(Stop.busstr))
+    if len(Stop.busstr) > 16:
+        Disp.write_line(1,strip_spaces(Stop.busstr))
+    else:
+        Disp.write_line(1,Stop.busstr)
     Disp.write_line(2,Stop.status)
     
 def update_display():
