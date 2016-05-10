@@ -2,15 +2,15 @@ import dothat.backlight as backlight
 import dothat.lcd as lcd
 
 class Displayotron():
-    def __init__():
+    def __init__(self):
         pass
    
-    def tidyup():
+    def tidyup(self):
         backlight.off()
         backlight.graph_off()
         lcd.clear()
     
-    def write_line(line,text):
+    def write_line(self,line,text):
         line = int(line)
         text = str(text)[:16] # Truncate to 16 characters
         
