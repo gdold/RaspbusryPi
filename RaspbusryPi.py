@@ -18,7 +18,7 @@ update = True
     
 id = "54119"
 bus = "W7"
-delay = 3
+delay = 30
     
 Stop = bs.BusStop(id)
 Disp = dsp.Displayotron()
@@ -29,7 +29,7 @@ def update_bus_info():
 def display_bus_times():
     lcd.clear()
     Disp.write_line(0,bus + " from " + id)
-    Disp.write_line(1,Stop.busstr)
+    Disp.write_line(1,strip_spaces(Stop.busstr))
     Disp.write_line(2,Stop.status)
     
 def update_display():
@@ -58,4 +58,5 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         print('Keyboard interrupt')
         Updater.stop_updating()
+        Disp.tidyup()
         sys.exit(0)
