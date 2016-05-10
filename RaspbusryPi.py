@@ -1,6 +1,10 @@
 import FreeFL.freefl as ffl
 import BusStop as bs
 
+import dothat.backlight as backlight
+import dothat.lcd as lcd
+import BusDisplay as dsp
+
 import time
 import threading
 import sys
@@ -17,23 +21,26 @@ bus = "W7"
 delay = 3
     
 Stop = bs.BusStop(id)
+Disp = dsp.Displayotron()
 
 def update_bus_info():
     Stop.update_info()
 
 def display_bus_times():
-    print(Stop.busstr)
-    print(Stop.status)
+    lcd.clear()
+    Disp.write_line(0,bus + " from " + id)
+    Disp.write_line(1,Stop.busstr)
+    Disp.write_line(2,Stop.status)
     
 def update_display():
     update_bus_info()
     display_bus_times()
 
 
-print(bus + " from " + id)
-Stop.update_info()
-print(Stop.busstr)
-print(Stop.status)
+Disp.tidyup()
+update_bus_info()
+display_bus_times()
+
 
 Updater = upd.Updater(delay,update_display)
 Updater.start_updating()
