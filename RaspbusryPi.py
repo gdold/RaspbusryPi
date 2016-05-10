@@ -41,6 +41,9 @@ def update_display():
 
 
 Disp.tidyup()
+
+Disp.set_rgb(33,33,33)
+
 update_bus_info()
 display_bus_times()
 
@@ -57,7 +60,8 @@ if __name__ == '__main__':
         try: input = raw_input # Compatibility with Python 2 & 3
         except NameError: pass
         input("") # Main thread ends on user pressing enter
-        
+        Updater.stop_updating()
+        Disp.tidyup()
     except KeyboardInterrupt:
         print('Keyboard interrupt')
         Updater.stop_updating()
