@@ -1,23 +1,14 @@
 import FreeFL.freefl as ffl
+import BusStop as bs
 
-StopMD = ffl.BusInfo("54119","Hornsey Central Health Centre (MD)")
+def strip_spaces(string):
+    return string.replace(' ','')
 
-buses = StopMD.get_live_data()
+id = "54119"
+    
+Stop = bs.BusStop(id)
+Stop.update_info()
 
-next_buses = []
-
-for bus in buses:
-    time = bus["resDue"].replace(' min','') # Strip ' min' from bus times
-    next_buses.append(time)
-
-def times_to_str(bus_times):
-    if len(bus_times) == 0: 
-        string = "No buses within 30 min"
-    else:
-        string = ', '.join(bus_times)
-        if not next_buses[-1] == 'due': # Add min to end
-            string += ' min'            # only if final bus not 'due'
-     
-    return string
-
-print(times_to_str(next_buses))
+print(Stop.busstr)
+#print(strip_spaces(Stop.busstr))
+print(Stop.status)
