@@ -5,11 +5,13 @@ import BusStop as bs
 
 import dothat.backlight as backlight
 import dothat.lcd as lcd
+import dothat.touch as touch
 import BusDisplay as dsp
 
 import time
 import threading
 import sys
+import signal
 
 import BusUpdater as upd
 
@@ -63,20 +65,27 @@ Updater = upd.Updater(delay,update_display)
 Updater.start_updating()
 
 
+@touch.on(touch.CANCEL)
+def handle_cancel(ch, evt):
+    print("Cancel button")
+    Updater.stop_updating()
+    Disp.tidyup()
+    sys.exit(0)
+
 
 #Updater.stop_updating()
 
-if __name__ == '__main__':
-    try:
-        try: input = raw_input # Compatibility with Python 2 & 3
-        except NameError: pass
-        input("") # Main thread ends on user pressing enter
-        Updater.stop_updating()
-        Disp.tidyup()
-    except KeyboardInterrupt:
-        print('Keyboard interrupt')
-        Updater.stop_updating()
-        Disp.tidyup()
-        sys.exit(0)
+# if __name__ == '__main__':
+    # try:
+        # try: input = raw_input # Compatibility with Python 2 & 3
+        # except NameError: pass
+        # input("") # Main thread ends on user pressing enter
+        # Updater.stop_updating()
+        # Disp.tidyup()
+    # except KeyboardInterrupt:
+        # print('Keyboard interrupt')
+        # Updater.stop_updating()
+        # Disp.tidyup()
+        # sys.exit(0)
 
-#signal.pause() # Alternate option
+signal.pause() # Alternate option
