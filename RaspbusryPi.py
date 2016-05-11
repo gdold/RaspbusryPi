@@ -31,7 +31,10 @@ Stop = bs.BusStop(id)
 Disp = dsp.Displayotron()
 
 def update_bus_info():
-    Stop.update_info()
+    try: Stop.update_info()
+    except ConnectionError: 
+        Stop.status = "ConErr  " + Stop.last_updated()
+        print("Connection error " + time.localtime())
 
 def display_bus_times():
     lcd.clear()
@@ -75,3 +78,5 @@ if __name__ == '__main__':
         Updater.stop_updating()
         Disp.tidyup()
         sys.exit(0)
+
+#signal.pause() # Alternate option
