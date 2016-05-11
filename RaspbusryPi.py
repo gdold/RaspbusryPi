@@ -12,6 +12,7 @@ import time
 import threading
 import sys
 import signal
+import requests
 
 import BusUpdater as upd
 
@@ -34,9 +35,9 @@ Disp = dsp.Displayotron()
 
 def update_bus_info():
     try: Stop.update_info()
-    except ConnectionError: 
-        Stop.status = "ConErr  " + Stop.last_updated()
-        print("Connection error " + time.localtime())
+    except requests.ConnectionError: 
+        Stop.status = "ConnErr " + Stop.last_updated()
+        print("Connection error " + time.asctime())
 
 def display_bus_times():
     lcd.clear()
@@ -88,4 +89,4 @@ def handle_cancel(ch, evt):
         # Disp.tidyup()
         # sys.exit(0)
 
-signal.pause() # Alternate option
+#signal.pause() # Alternate option

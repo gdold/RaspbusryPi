@@ -19,7 +19,7 @@ class BusStop():
             next_buses.append(time)
 
         if len(next_buses) == 0: 
-            string = "No buses within 30 min"
+            string = "No bus in 30 min"
         else:
             string = ', '.join(next_buses)
             if not next_buses[-1] == 'due': # Add min to end
@@ -37,6 +37,6 @@ class BusStop():
         self.busstr = self.info_to_str(self.businfo)
         
         self.updated = time.time() # Seconds since epoch
-        self.status = "Updated " + self.last_updated()
+        self.status = "updated " + self.last_updated()
         
         return self.busstr
