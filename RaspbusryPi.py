@@ -22,7 +22,8 @@ update = True
     
 stop_id = '490008357S'
 bus = "W7"
-delay = 30
+fetch_delay = 30
+refresh_delay = 5
 
 backlight_r = 33
 backlight_g = 33
@@ -37,7 +38,7 @@ def fetch_bus_data():
 
 def display_bus_times():
     lcd.clear()
-    Disp.write_line(0,bus + " from " + id)
+    Disp.write_line(0,bus + " from " + stop_id)
     if len(Stop.busstr) > 16:
         Disp.write_line(1,strip_spaces(Stop.busstr))
     else:
@@ -59,7 +60,7 @@ refresh_display()
 
 
 FetchUpdater = upd.Updater(fetch_delay,fetch_bus_data)
-RefreshUpdater = upd.Updater(refresh_delay,disp)
+RefreshUpdater = upd.Updater(refresh_delay,refresh_display)
 FetchUpdater.start_updating()
 RefreshUpdater.start_updating()
 
