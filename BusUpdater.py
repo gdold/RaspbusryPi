@@ -9,7 +9,7 @@ class Updater():
     
     def _update(self):
         self.function()
-        if self.update = False:
+        if self.update == False:
             return
         self.t = threading.Timer(self.delay,self._update)
 #        self.t.daemon = True
