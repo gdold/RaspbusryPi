@@ -63,9 +63,3 @@ class FetchBusData():
             self.busstr = ', '.join(self.bus_mins)
             if not self.bus_mins[-1] == 'due': # Add min to end
                 self.busstr += ' min'          # only if final bus not 'due'
-        
-a = FetchBusData('490008357S')
-a.fetch_bus_data()
-a.refresh_bus_times()
-print a.busstr
-print a.status

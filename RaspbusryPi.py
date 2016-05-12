@@ -21,6 +21,7 @@ def strip_spaces(string):
 update = True
     
 stop_id = '490008357S'
+api_key = '?app_id=f1fff9f7&app_key=80c7973c8a779d54159f53c71bdfa5e6'
 bus = "W7"
 fetch_delay = 30
 refresh_delay = 5
@@ -30,7 +31,7 @@ backlight_g = 33
 backlight_b = 33
 lcd_contrast = 43
     
-Stop = fbd.FetchBusData(stop_id)
+Stop = fbd.FetchBusData(stop_id,api_key)
 Disp = dsp.Displayotron()
 
 def fetch_bus_data():
