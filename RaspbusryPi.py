@@ -30,6 +30,7 @@ def strip_spaces(string):
 
 def fetch_bus_data():
     Stop.fetch_bus_data()
+    Disp.blink_led(1)
 
 def display_bus_times():
     lcd.clear()
@@ -43,6 +44,7 @@ def display_bus_times():
 def refresh_display():
     Stop.refresh_bus_times()
     display_bus_times()
+    Disp.blink_led(0)
 
 Stop = fbd.FetchBusData(stop_id,api_key)
 Disp = dsp.Displayotron()
