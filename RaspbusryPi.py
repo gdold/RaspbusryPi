@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import FetchBusData as fbd
-import BusUpdater as upd
+import UpdaterThread as upd
 
 import dothat.backlight as backlight
 import dothat.lcd as lcd

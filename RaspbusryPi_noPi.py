@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import FetchBusData as fbd
-import BusUpdater as upd
+import UpdaterThread as upd
 import time
 import threading
 import sys
