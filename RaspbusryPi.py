@@ -37,7 +37,7 @@ def fetch_bus_data():
 
 def display_bus_times():
     lcd.clear()
-    Disp.write_line(0,bus + " from " + id)
+    Disp.write_line(0,bus + " from " + stop_id)
     if len(Stop.busstr) > 16:
         Disp.write_line(1,strip_spaces(Stop.busstr))
     else:
@@ -67,8 +67,13 @@ RefreshUpdater.start_updating()
 @touch.on(touch.CANCEL)
 def handle_cancel(ch, evt):
     print("Cancel button")
+    
+    FetchUpdater.update = False
+    RefreshUpdater.update = False
+    
     FetchUpdater.stop_updating()
     RefreshUpdater.stop_updating()
+    
     Disp.tidyup()
     sys.exit(0)
 
