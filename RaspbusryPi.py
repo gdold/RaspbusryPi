@@ -24,13 +24,14 @@ backlight_r = 33
 backlight_g = 33
 backlight_b = 33
 lcd_contrast = 43
+led_on_time = 0.02
     
 def strip_spaces(string):
     return string.replace(', ',',')
 
 def fetch_bus_data():
     Stop.fetch_bus_data()
-    Disp.blink_led(1)
+    Disp.blink_led(5,led_on_time)
 
 def display_bus_times():
     lcd.clear()
@@ -44,7 +45,7 @@ def display_bus_times():
 def refresh_display():
     Stop.refresh_bus_times()
     display_bus_times()
-    Disp.blink_led(0)
+    Disp.blink_led(0,led_on_time)
 
 Stop = fbd.FetchBusData(stop_id,api_key)
 Disp = dsp.Displayotron()
@@ -60,8 +61,8 @@ refresh_display()
 
 # Two asynchronous threads that update and refresh display at set intervals
 FetchUpdater = upd.Updater(fetch_delay,fetch_bus_data)
-RefreshUpdater = upd.Updater(refresh_delay,refresh_display)
 FetchUpdater.start_updating()
+RefreshUpdater = upd.Updater(refresh_delay,refresh_display)
 RefreshUpdater.start_updating()
 
 
