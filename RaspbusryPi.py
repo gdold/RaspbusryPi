@@ -24,7 +24,7 @@ backlight_r = 33
 backlight_g = 33
 backlight_b = 33
 lcd_contrast = 43
-led_on_time = 0.02
+led_on_time = 0.001
     
 def strip_spaces(string):
     return string.replace(', ',',')
