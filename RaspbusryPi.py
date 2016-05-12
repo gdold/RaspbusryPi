@@ -54,8 +54,8 @@ Disp.tidyup()
 Disp.set_rgb(backlight_r,backlight_g,backlight_b)
 lcd.set_contrast(lcd_contrast)
 
-update_bus_info()
-display_bus_times()
+fetch_bus_data()
+refresh_display()
 
 
 FetchUpdater = upd.Updater(fetch_delay,fetch_bus_data)
