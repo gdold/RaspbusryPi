@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
-import FreeFL.freefl as ffl
-import BusStop as bs
+import FetchBusData as fbd
+import BusUpdater as upd
 
 import dothat.backlight as backlight
 import dothat.lcd as lcd
@@ -14,14 +14,13 @@ import sys
 import signal
 import requests
 
-import BusUpdater as upd
 
 def strip_spaces(string):
     return string.replace(', ',',')
 
 update = True
     
-id = "54119"
+stop_id = '490008357S'
 bus = "W7"
 delay = 30
 
@@ -30,14 +29,11 @@ backlight_g = 33
 backlight_b = 33
 lcd_contrast = 43
     
-Stop = bs.BusStop(id)
+Stop = fbd.FetchBusData(stop_id)
 Disp = dsp.Displayotron()
 
-def update_bus_info():
-    try: Stop.update_info()
-    except requests.ConnectionError: 
-        Stop.status = "ConnErr " + Stop.last_updated()
-        print("Connection error " + time.asctime())
+def fetch_bus_data():
+    Stop.fetch_bus_data()
 
 def display_bus_times():
     lcd.clear()
@@ -48,8 +44,8 @@ def display_bus_times():
         Disp.write_line(1,Stop.busstr)
     Disp.write_line(2,Stop.status)
     
-def update_display():
-    update_bus_info()
+def refresh_display():
+    Stop.refresh_bus_times()
     display_bus_times()
 
 
@@ -62,14 +58,17 @@ update_bus_info()
 display_bus_times()
 
 
-Updater = upd.Updater(delay,update_display)
-Updater.start_updating()
+FetchUpdater = upd.Updater(fetch_delay,fetch_bus_data)
+RefreshUpdater = upd.Updater(refresh_delay,disp)
+FetchUpdater.start_updating()
+RefreshUpdater.start_updating()
 
 
 @touch.on(touch.CANCEL)
 def handle_cancel(ch, evt):
     print("Cancel button")
-    Updater.stop_updating()
+    FetchUpdater.stop_updating()
+    RefreshUpdater.stop_updating()
     Disp.tidyup()
     sys.exit(0)
 

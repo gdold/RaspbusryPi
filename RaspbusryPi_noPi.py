@@ -1,44 +1,53 @@
 #!/usr/bin/env python
 
-import FreeFL.freefl as ffl
-import BusStop as bs
-
+import FetchBusData as fbd
+import BusUpdater as upd
 import time
 import threading
 import sys
 
-import BusUpdater as upd
+
 
 def strip_spaces(string):
     return string.replace(' ','')
 
 update = True
     
-id = "54119"
+stop_id = '490008357S'
 bus = "W7"
-delay = 3
+fetch_delay = 11
+refresh_delay = 2
     
-Stop = bs.BusStop(id)
+Stop = fbd.FetchBusData(stop_id)
 
-def update_bus_info():
-    Stop.update_info()
+def fetch_bus_data():
+    Stop.fetch_bus_data()
+    
+def refresh_bus_times():
+    Stop.refresh_bus_times()
 
 def display_bus_times():
     print(Stop.busstr)
     print(Stop.status)
     
-def update_display():
-    update_bus_info()
+def full_update_display():
+    fetch_bus_data()
+    refresh_bus_times()
     display_bus_times()
 
+def disp():
+    refresh_bus_times()
+    display_bus_times()
 
-print(bus + " from " + id)
-Stop.update_info()
+print(bus + " from " + stop_id)
+full_update_display()
 print(Stop.busstr)
 print(Stop.status)
 
-Updater = upd.Updater(delay,update_display)
-Updater.start_updating()
+FetchUpdater = upd.Updater(fetch_delay,fetch_bus_data)
+RefreshUpdater = upd.Updater(refresh_delay,disp)
+FetchUpdater.start_updating()
+RefreshUpdater.start_updating()
 
 
 
