@@ -24,7 +24,7 @@ class Displayotron():
         blue = int(blue)
         backlight.rgb(red,green,blue)
     
-    def blink_led(self,led,time_on=0.05)
+    def blink_led(self,led,time_on=0.05):
         backlight.graph_set_led_duty(0,1)
         backlight.graph_set_led_state(led,1)
         time.sleep(time_on)
