@@ -57,11 +57,11 @@ lcd.set_contrast(lcd_contrast)
 
 # Make sure there is data right from start
 fetch_bus_data()
-refresh_display()
-
-# Two asynchronous threads that update and refresh display at set intervals
 FetchUpdater = upd.Updater(fetch_delay,fetch_bus_data)
 FetchUpdater.start_updating()
+
+# Two asynchronous threads that update and refresh display at set intervals
+refresh_display()
 RefreshUpdater = upd.Updater(refresh_delay,refresh_display)
 RefreshUpdater.start_updating()
 
