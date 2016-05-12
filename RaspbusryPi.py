@@ -22,7 +22,8 @@ update = True
     
 stop_id = '490008357S'
 bus = "W7"
-delay = 30
+fetch_delay = 30
+refresh_delay = 5
 
 backlight_r = 33
 backlight_g = 33
@@ -59,7 +60,7 @@ refresh_display()
 
 
 FetchUpdater = upd.Updater(fetch_delay,fetch_bus_data)
-RefreshUpdater = upd.Updater(refresh_delay,disp)
+RefreshUpdater = upd.Updater(refresh_delay,refresh_display)
 FetchUpdater.start_updating()
 RefreshUpdater.start_updating()
 
