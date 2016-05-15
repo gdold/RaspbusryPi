@@ -1,5 +1,4 @@
 import requests
-import json
 import time
 from calendar import timegm # convert UTC time to seconds since epoch
 
@@ -26,17 +25,22 @@ class FetchBusData():
         
     def fetch_bus_data(self):
         try:
-            fetched_data_raw = requests.get(self.url)
-            fetched_string = fetched_data_raw.text
-            self.fetched_data = json.loads(fetched_string)
+            self.fetched_data = requests.get(self.url).json()
             status_str = 'updated '
             self.updated = time.localtime()
         except requests.ConnectionError: 
             status_str = 'ConnErr '
-            print('Connection Error')
-            
-        time_updated = time.strftime("%H:%M:%S",self.updated)
-        self.status = status_str + time_updated
+            print('Connection Error ' + time.strftime("%H:%M:%S",time.localtime()))
+        except ValueError:
+            status_str = 'ValErr  '
+            print('JSON Value Error ' + time.strftime("%H:%M:%S",time.localtime()))
+        
+        try:
+            time_updated = time.strftime("%H:%M:%S",self.updated)
+            self.status = status_str + time_updated
+        except TypeError:
+            self.status = status_str + ' NO DATA'
+        
         
     def refresh_bus_times(self):
         self.businfo = []
