@@ -34,6 +34,9 @@ class FetchBusData():
         except ValueError:
             status_str = 'ValErr  '
             print('JSON Value Error ' + time.strftime("%H:%M:%S",time.localtime()))
+        except TypeError:
+            status_sttr = 'TypeErr '
+            print('Type Error (parsing ISO 8601?) ' + time.strftime("%H:%M:%S",time.localtime()))
         
         try:
             time_updated = time.strftime("%H:%M:%S",self.updated)
