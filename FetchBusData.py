@@ -34,9 +34,6 @@ class FetchBusData():
         except ValueError:
             status_str = 'ValErr  '
             print('JSON Value Error ' + time.strftime("%H:%M:%S",time.localtime()))
-        except TypeError:
-            status_sttr = 'TypeErr '
-            print('Type Error (parsing ISO 8601?) ' + time.strftime("%H:%M:%S",time.localtime()))
         
         try:
             time_updated = time.strftime("%H:%M:%S",self.updated)
@@ -47,16 +44,20 @@ class FetchBusData():
         
     def refresh_bus_times(self):
         self.businfo = []
+        try:
         for bus in self.fetched_data:
             self.businfo.append( time.strptime(bus['expectedArrival'],"%Y-%m-%dT%H:%M:%SZ") ) # Parse ISO 8601 string to time object
-        
+        except TypeError:
+            status_sttr = 'TypeErr '
+            print('Type Error (parsing ISO 8601?) ' + time.strftime("%H:%M:%S",time.localtime()))
+            
         bus_sec_int = [ int(timegm(bus_time) - timegm(time.gmtime())) for bus_time in self.businfo ]
         bus_sec_int.sort()
         bus_min_int = [ bus_time/60 for bus_time in bus_sec_int ] # 59 sec = 0 min
         
         self.bus_mins = []
         for bus_time in bus_min_int:
-            if bus_time < -9: # Buses aren't normally 10 mins late
+            if bus_time < -2: # Buses aren't normally over 2 mins late
                 pass
             elif bus_time < 1:
                 self.bus_mins.append('due')
