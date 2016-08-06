@@ -45,8 +45,8 @@ class FetchBusData():
     def refresh_bus_times(self):
         self.businfo = []
         try:
-        for bus in self.fetched_data:
-            self.businfo.append( time.strptime(bus['expectedArrival'][0:19],"%Y-%m-%dT%H:%M:%S") ) # Parse ISO 8601 string to time object
+            for bus in self.fetched_data:
+                self.businfo.append( time.strptime(bus['expectedArrival'][0:19],"%Y-%m-%dT%H:%M:%S") ) # Parse ISO 8601 string to time object
         except TypeError:
             status_sttr = 'TypeErr '
             print('Type Error (parsing ISO 8601?) ' + time.strftime("%H:%M:%S",time.localtime()))
