@@ -2,7 +2,16 @@
 
 import FetchBusData as fbd
 import UpdaterThread as upd
-import BusDisplayNOPI as dsp
+
+try:
+    import BusDisplay as dsp
+    is_pi = True
+except:
+    import BusDisplayNOPI as dsp
+    is_pi = False
+    print("Error importing display library (dot3k library not installed?). Using terminal.")
+    
+
 
 import sys
 

@@ -34,20 +34,30 @@ class touch_class():
     
 class lcd_class():
     def __init__(self):
-        pass
+        self.stdscr = curses.initscr()
+
+        self.position = 0
+        self.line = 0
+        height = 3; width = 16
+        self.win = curses.newwin(height, width, self.line, self.position)
+        
     def clear(self,):
-        pass
+        self.win.clear()
     def set_cursor_position(self,position,line):
-        pass
+        self.position = position
+        self.line = line
     def set_contrast(self,lcd_contrast):
         pass
     def write(self,text):
-        print(text)
+        self.win.insstr(self.line,self.position,text)
+        self.win.refresh()
     
 
 backlight = backlight_class()
 touch = touch_class()
 lcd = lcd_class()
+
+
 
 class Displayotron():
     def __init__(self):
