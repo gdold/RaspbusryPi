@@ -2,16 +2,9 @@
 
 import FetchBusData as fbd
 import UpdaterThread as upd
-
-import dothat.backlight as backlight
-import dothat.lcd as lcd
-import dothat.touch as touch
 import BusDisplay as dsp
 
-import time
-import threading
 import sys
-import requests
 
     
 stop_id = '490008357S'
@@ -34,7 +27,7 @@ def fetch_bus_data():
     Disp.blink_led(5,led_on_time)
 
 def display_bus_times():
-    lcd.clear()
+    dsp.lcd.clear()
     Disp.write_line(0,description)
     if len(Stop.busstr) > 16:
         Disp.write_line(1,strip_spaces(Stop.busstr))
@@ -53,7 +46,7 @@ Disp = dsp.Displayotron()
 Disp.tidyup()
 
 Disp.set_rgb(backlight_r,backlight_g,backlight_b)
-lcd.set_contrast(lcd_contrast)
+dsp.lcd.set_contrast(lcd_contrast)
 
 # Make sure there is data right from start
 fetch_bus_data()
@@ -66,7 +59,7 @@ RefreshUpdater = upd.Updater(refresh_delay,refresh_display)
 RefreshUpdater.start_updating()
 
 
-@touch.on(touch.CANCEL)
+@dsp.touch.on(dsp.touch.CANCEL)
 def handle_cancel(ch, evt):
     print("Cancel button")
     
