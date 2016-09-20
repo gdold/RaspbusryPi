@@ -4,25 +4,25 @@
 
 #import time
 
-class backlight():
+class backlight_class():
     def __init__(self):
         pass
-    def off():
+    def off(self):
         pass
-    def graph_off():
+    def graph_off(self):
         pass
-    def rgb(red,green,blue):
+    def rgb(self,red,green,blue):
         pass
-    def graph_set_led_duty(a,b):
+    def graph_set_led_duty(self,a,b):
         pass
-    def graph_set_led_state(a,b):
+    def graph_set_led_state(self,a,b):
         pass
     
-class touch():
+class touch_class():
     CANCEL = 0
     def __init__(self):
         pass
-    def on(event):
+    def on(self,event):
         def thing(handler):
             pass
         return thing
@@ -30,18 +30,22 @@ class touch():
 #        pass
     
     
-class lcd():
+class lcd_class():
     def __init__(self):
         pass
-    def clear():
+    def clear(self,):
         pass
-    def set_cursor_position(position,line):
+    def set_cursor_position(self,position,line):
         pass
-    def set_contrast(lcd_contrast):
+    def set_contrast(self,lcd_contrast):
         pass
-    def write(text):
+    def write(self,text):
         print(text)
     
+
+backlight = backlight_class()
+touch = touch_class()
+lcd = lcd_class()
 
 class Displayotron():
     def __init__(self):
