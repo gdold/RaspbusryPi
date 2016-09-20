@@ -40,7 +40,7 @@ class lcd():
     def set_contrast(lcd_contrast):
         pass
     def write(text):
-        pass
+        print(text)
     
 
 class Displayotron():
