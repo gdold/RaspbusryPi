@@ -7,34 +7,39 @@
 class backlight():
     def __init__(self):
         pass
-    def off(self):
+    def off():
         pass
-    def graph_off(self):
+    def graph_off():
         pass
-    def rgb(self,red,green,blue):
+    def rgb(red,green,blue):
         pass
-    def graph_set_led_duty(self,a,b):
+    def graph_set_led_duty(a,b):
         pass
-    def graph_set_led_state(self,a,b):
+    def graph_set_led_state(a,b):
         pass
     
 class touch():
+    CANCEL = 0
     def __init__(self):
         pass
-    def on(self):
-        pass
-    def CANCEL(self):
-        pass
+    def on(event):
+        def thing(handler):
+            pass
+        return thing
+#    def CANCEL():
+#        pass
     
     
 class lcd():
     def __init__(self):
         pass
-    def clear(self):
+    def clear():
         pass
-    def set_cursor_position(self,position,line):
+    def set_cursor_position(position,line):
         pass
-    def write(self,text):
+    def set_contrast(lcd_contrast):
+        pass
+    def write(text):
         pass
     
 
