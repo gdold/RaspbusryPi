@@ -1,8 +1,42 @@
-import dothat.backlight as backlight
-import dothat.lcd as lcd
-import dothat.touch as touch
+#import dothat.backlight as backlight
+#import dothat.lcd as lcd
+#import dothat.touch as touch
 
 #import time
+
+class backlight():
+    def __init__(self):
+        pass
+    def off(self):
+        pass
+    def graph_off(self):
+        pass
+    def rgb(self,red,green,blue):
+        pass
+    def graph_set_led_duty(self,a,b):
+        pass
+    def graph_set_led_state(self,a,b):
+        pass
+    
+class touch():
+    def __init__(self):
+        pass
+    def on(self):
+        pass
+    def CANCEL(self):
+        pass
+    
+    
+class lcd():
+    def __init__(self):
+        pass
+    def clear(self):
+        pass
+    def set_cursor_position(self,position,line):
+        pass
+    def write(self,text):
+        pass
+    
 
 class Displayotron():
     def __init__(self):

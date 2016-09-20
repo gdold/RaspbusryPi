@@ -2,7 +2,7 @@
 
 import FetchBusData as fbd
 import UpdaterThread as upd
-import BusDisplay as dsp
+import BusDisplayNOPI as dsp
 
 import sys
 
