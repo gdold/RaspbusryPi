@@ -2,6 +2,8 @@
 #import dothat.lcd as lcd
 #import dothat.touch as touch
 
+import curses # for writing to screen in a manner similar to hat
+
 #import time
 
 class backlight_class():
