@@ -2,7 +2,7 @@
 #import dothat.lcd as lcd
 #import dothat.touch as touch
 
-import curses # for writing to screen in a manner similar to hat
+import sys # for writing to screen in a manner similar to hat
 
 #import time
 
@@ -34,25 +34,26 @@ class touch_class():
     
 class lcd_class():
     def __init__(self):
-        self.stdscr = curses.initscr()
-
-        self.position = 0
+        self.pl = "\033[F"
         self.line = 0
-        height = 3; width = 16
-        self.win = curses.newwin(height, width, self.line, self.position)
+        self.text = [' '*16,' '*16,' '*16]
         
-        curses.nocbreak(); self.stdscr.keypad(0); curses.echo()
+        sys.stdout.write(' '*16+'\n'+' '*16+'\n'+' '*16+'\n')
         
     def clear(self,):
-        self.win.clear()
+        sys.stdout.write(self.pl*3)
+        sys.stdout.write(' '*16+'\n'+' '*16+'\n'+' '*16+'\n')
     def set_cursor_position(self,position,line):
         self.position = position
         self.line = line
     def set_contrast(self,lcd_contrast):
         pass
     def write(self,text):
-        self.win.insstr(self.line,self.position,text)
-        self.win.refresh()
+        self.text[self.line] = text
+        sys.stdout.write(self.pl*3)
+        sys.stdout.write(self.text[0]+'\n')
+        sys.stdout.write(self.text[1]+'\n')
+        sys.stdout.write(self.text[2]+'\n')
     
 
 backlight = backlight_class()
