@@ -26,7 +26,7 @@ class touch_class():
         pass
     def on(self,event):
         def thing(handler):
-            pass
+            return True
         return thing
 #    def CANCEL():
 #        pass
@@ -40,6 +40,8 @@ class lcd_class():
         self.line = 0
         height = 3; width = 16
         self.win = curses.newwin(height, width, self.line, self.position)
+        
+        curses.nocbreak(); self.stdscr.keypad(0); curses.echo()
         
     def clear(self,):
         self.win.clear()
