@@ -3,6 +3,8 @@
 #import dothat.touch as touch
 
 import sys # for writing to screen in a manner similar to hat
+import getch
+getchar = getch._Getch()
 
 #import time
 
@@ -21,13 +23,31 @@ class backlight_class():
         pass
     
 class touch_class():
-    CANCEL = 0
+    CANCEL = 127 #backspace
+    BUTTON = 13 #enter
+    UP = 65 #27-91-65 sequence of getchar()
+    DOWN = 66
+    RIGHT = 67
+    LEFT = 68
     def __init__(self):
-        pass
+        self.events = {}
+    def do_thing(self,event,handler):
+        while True:
+            keypress = getchar()
+            for entry in list(self.events.keys()):
+                if ord(keypress)==entry:
+                    self.events[entry](entry,None)
+                if ord(keypress)==27: # arrow key
+                    getchar()
+                    direction = getchar()
+                    if ord(direction)==entry:
+                        self.events[entry](event,None)
+                        print(ord(direction))
     def on(self,event):
-        def thing(handler):
-            return True
-        return thing
+        def register(handler):
+            self.events[event] = handler
+            self.do_thing(event,handler)
+        return register
 #    def CANCEL():
 #        pass
     
@@ -67,9 +87,10 @@ class Displayotron():
         pass
    
     def tidyup(self):
-        backlight.off()
-        backlight.graph_off()
-        lcd.clear()
+        #backlight.off()
+        #backlight.graph_off()
+        #lcd.clear()
+        pass
     
     def write_line(self,line,text):
         line = int(line)
