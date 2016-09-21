@@ -81,3 +81,5 @@ def handle_cancel(ch, evt):
     
     Disp.tidyup()
     sys.exit(0)
+
+if not is_pi: dsp.touch.check_for_inputs()
