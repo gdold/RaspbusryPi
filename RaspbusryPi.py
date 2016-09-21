@@ -8,7 +8,7 @@ try:
     is_pi = True
 except:
     print("Error importing display library (dot3k library not installed?). Using terminal.")
-    import BusDisplayNOPI as dsp
+    import BusDisplayTerm as dsp
     is_pi = False
     
     
