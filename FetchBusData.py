@@ -9,9 +9,10 @@ url_suffix = '/Arrivals'
 
 
 class FetchBusData():
-    def __init__(self,stop_id,api_key=''):
+    def __init__(self,stop_id,api_key='',line_id=''):
         self.stop_id = str(stop_id)
         self.api_key = str(api_key)
+        self.line_id = str(line_id)
         self.url = url_prefix + stop_id + url_suffix + api_key
         
         self.fetched_data = []
@@ -22,7 +23,12 @@ class FetchBusData():
         self.busstr = 'No info retrieved'
         self.status = 'No info retrieved'
         self.updated = 0.0
-        
+    
+    def reassign_stop(self,stop_id,line_id=''):
+        self.stop_id = str(stop_id)
+        self.line_id = str(line_id)
+        self.url = url_prefix + stop_id + url_suffix + self.api_key
+    
     def fetch_bus_data(self):
         try:
             self.fetched_data = requests.get(self.url).json()
@@ -46,7 +52,8 @@ class FetchBusData():
         self.businfo = []
         try:
             for bus in self.fetched_data:
-                self.businfo.append( time.strptime(bus['expectedArrival'][0:19],"%Y-%m-%dT%H:%M:%S") ) # Parse ISO 8601 string to time object
+                if self.line_id in bus['lineId']:
+                    self.businfo.append( time.strptime(bus['expectedArrival'][0:19],"%Y-%m-%dT%H:%M:%S") ) # Parse ISO 8601 string to time object
         except TypeError:
             status_sttr = 'TypeErr '
             print('Type Error (parsing ISO 8601?) ' + time.strftime("%H:%M:%S",time.localtime()))

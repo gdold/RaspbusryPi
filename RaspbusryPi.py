@@ -17,8 +17,8 @@ except:
 import sys
 import time
 
-stops = [{'stop_id':'490008357S', 'description':"W7 to F'buryPark"},{'stop_id':'490008357N', 'description':"W7 to Musw'lHill"}]
-stop = 1
+stops = [{'stop_id':'490008357S', 'description':"W7 to F'buryPark", 'line_id':"w7"},{'stop_id':'490008357N', 'description':"W7 to Musw'lHill", 'line_id':"w7"},{'stop_id':'490005826CB', 'description':"91 to Trf'garSqu", 'line_id':"91"}]
+stop = 0
     
 stop_id = stops[0]['stop_id']
 api_key = '?app_id=f1fff9f7&app_key=80c7973c8a779d54159f53c71bdfa5e6'
@@ -54,8 +54,9 @@ def refresh_display():
     Disp.blink_led(0,led_on_time)
     
 def cycle_stop(increment=1):
-    global stop
+    global stop, Stop
     stop = (stop+increment)%len(stops)
+    Stop.reassign_stop(stops[stop]['stop_id'],stops[stop]['line_id'])
     Stop.busstr = ' '*16
     Stop.status = 'Please Wait...  '
     display_bus_times()
@@ -65,8 +66,8 @@ def cycle_stop(increment=1):
 
 
     
-def create_stop(stop_id,api_key):
-    return fbd.FetchBusData(stop_id,api_key)
+def create_stop(stop_id,api_key,line_id):
+    return fbd.FetchBusData(stop_id,api_key,line_id)
     
 def ready_display():
     Disp = dsp.Displayotron()
@@ -98,7 +99,7 @@ def stop_updating():
     RefreshUpdater.stop_updating()
 
     
-Stop = create_stop(stops[stop]['stop_id'],api_key)
+Stop = create_stop(stops[stop]['stop_id'],api_key,stops[stop]['line_id'])
 Disp = ready_display()
 FetchUpdater = start_fetch_updater()
 RefreshUpdater = start_refresh_updater()
