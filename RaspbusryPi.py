@@ -15,11 +15,14 @@ except:
 
 
 import sys
+import time
 
+stops = [{'stop_id':'490008357S', 'description':"W7 to F'buryPark"},{'stop_id':'490008357N', 'description':"W7 to Musw'lHill"}]
+stop = 1
     
-stop_id = '490008357S'
+stop_id = stops[0]['stop_id']
 api_key = '?app_id=f1fff9f7&app_key=80c7973c8a779d54159f53c71bdfa5e6'
-description = "W7 to F'buryPark"
+description = stops[0]['description']
 fetch_delay = 30
 refresh_delay = 5
 
@@ -38,7 +41,7 @@ def fetch_bus_data():
 
 def display_bus_times():
     dsp.lcd.clear()
-    Disp.write_line(0,description)
+    Disp.write_line(0,stops[stop]['description'])
     if len(Stop.busstr) > 16:
         Disp.write_line(1,strip_spaces(Stop.busstr))
     else:
@@ -49,57 +52,86 @@ def refresh_display():
     Stop.refresh_bus_times()
     display_bus_times()
     Disp.blink_led(0,led_on_time)
+    
+def cycle_stop(increment=1):
+    global stop
+    stop = (stop+increment)%len(stops)
+    Stop.busstr = ' '*16
+    Stop.status = 'Please Wait...  '
+    display_bus_times()
+    fetch_bus_data()
+    refresh_display()
+    
 
-Stop = fbd.FetchBusData(stop_id,api_key)
-Disp = dsp.Displayotron()
 
-Disp.tidyup()
+    
+def create_stop(stop_id,api_key):
+    return fbd.FetchBusData(stop_id,api_key)
+    
+def ready_display():
+    Disp = dsp.Displayotron()
+    Disp.tidyup()
+    Disp.set_rgb(backlight_r,backlight_g,backlight_b)
+    dsp.lcd.set_contrast(lcd_contrast)
+    
+    return Disp
+    
+def start_fetch_updater():
+    fetch_bus_data()
+    FetchUpdater = upd.Updater(fetch_delay,fetch_bus_data)
+    FetchUpdater.start_updating()
+    
+    return FetchUpdater
 
-Disp.set_rgb(backlight_r,backlight_g,backlight_b)
-dsp.lcd.set_contrast(lcd_contrast)
+def start_refresh_updater():
+    refresh_display()
+    RefreshUpdater = upd.Updater(refresh_delay,refresh_display)
+    RefreshUpdater.start_updating()
+    
+    return RefreshUpdater
+    
+def stop_updating():
+    FetchUpdater.update = False
+    RefreshUpdater.update = False
+    
+    FetchUpdater.stop_updating()
+    RefreshUpdater.stop_updating()
 
-# Make sure there is data right from start
-fetch_bus_data()
-FetchUpdater = upd.Updater(fetch_delay,fetch_bus_data)
-FetchUpdater.start_updating()
-
-# Two asynchronous threads that update and refresh display at set intervals
-refresh_display()
-RefreshUpdater = upd.Updater(refresh_delay,refresh_display)
-RefreshUpdater.start_updating()
+    
+Stop = create_stop(stops[stop]['stop_id'],api_key)
+Disp = ready_display()
+FetchUpdater = start_fetch_updater()
+RefreshUpdater = start_refresh_updater()
 
 
 @dsp.touch.on(dsp.touch.CANCEL)
 def handle_cancel(ch, evt):
     print("Cancel button")
     
-    FetchUpdater.update = False
-    RefreshUpdater.update = False
-    
-    FetchUpdater.stop_updating()
-    RefreshUpdater.stop_updating()
+    stop_updating()
     
     Disp.tidyup()
     sys.exit(0)
     
 @dsp.touch.on(dsp.touch.BUTTON)
-def handle_left(ch, evt):
-    print("Button!")
+def handle_button(ch, evt):
+    pass
     
 @dsp.touch.on(dsp.touch.LEFT)
 def handle_left(ch, evt):
-    print("Left!")
+    cycle_stop(-1)
     
 @dsp.touch.on(dsp.touch.RIGHT)
-def handle_left(ch, evt):
-    print("Right!")
+def handle_right(ch, evt):
+    cycle_stop(1)
     
 @dsp.touch.on(dsp.touch.UP)
-def handle_left(ch, evt):
-    print("Up!")
+def handle_up(ch, evt):
+    pass
     
 @dsp.touch.on(dsp.touch.DOWN)
-def handle_left(ch, evt):
-    print("Down!")
+def handle_down(ch, evt):
+    pass
 
 if not is_pi: dsp.touch.check_for_inputs()
+
