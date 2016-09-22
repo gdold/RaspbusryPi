@@ -1,7 +1,7 @@
 #import dothat.backlight as backlight
 #import dothat.lcd as lcd
 #import dothat.touch as touch
-from __future__ import print_function
+#from __future__ import print_function
 import sys # for writing to screen in a manner similar to hat
 import getch
 getchar = getch._Getch()
@@ -46,13 +46,13 @@ class touch_class():
     def on(self,event):
         def register(handler):
             self.events[event] = handler
-#            self.check_for_inputs()
+            #self.check_for_inputs()
         return register
     
     
 class lcd_class():
     def __init__(self):
-        self.pl = "\033[F"
+        self.pl = "\033[F" # move cursor to previous line
         self.line = 0
         self.text = [' '*16,' '*16,' '*16]
         
@@ -69,9 +69,9 @@ class lcd_class():
     def write(self,text):
         self.text[self.line] = text
         sys.stdout.write(self.pl*3)
-        print(self.text[0]+'\n',end='\r')
-        print(self.text[1]+'\n',end='\r')
-        print(self.text[2]+'\n',end='\r')
+        sys.stdout.write(self.text[0]+'\n\r')
+        sys.stdout.write(self.text[1]+'\n\r')
+        sys.stdout.write(self.text[2]+'\n\r')
     
 
 backlight = backlight_class()
