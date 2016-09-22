@@ -53,7 +53,7 @@ class FetchBusData():
             
         bus_sec_int = [ int(timegm(bus_time) - timegm(time.gmtime())) for bus_time in self.businfo ]
         bus_sec_int.sort()
-        bus_min_int = [ bus_time/60 for bus_time in bus_sec_int ] # 59 sec = 0 min
+        bus_min_int = [ int(bus_time/60) for bus_time in bus_sec_int ] # 59 sec = 0 min
         
         self.bus_mins = []
         for bus_time in bus_min_int:
