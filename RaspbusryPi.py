@@ -81,5 +81,25 @@ def handle_cancel(ch, evt):
     
     Disp.tidyup()
     sys.exit(0)
+    
+@dsp.touch.on(dsp.touch.BUTTON)
+def handle_left(ch, evt):
+    print("Button!")
+    
+@dsp.touch.on(dsp.touch.LEFT)
+def handle_left(ch, evt):
+    print("Left!")
+    
+@dsp.touch.on(dsp.touch.RIGHT)
+def handle_left(ch, evt):
+    print("Right!")
+    
+@dsp.touch.on(dsp.touch.UP)
+def handle_left(ch, evt):
+    print("Up!")
+    
+@dsp.touch.on(dsp.touch.DOWN)
+def handle_left(ch, evt):
+    print("Down!")
 
 if not is_pi: dsp.touch.check_for_inputs()
